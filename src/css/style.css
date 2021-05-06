@@ -48,6 +48,7 @@ main > section:nth-child(2) > div {
   flex-grow: 1;
   min-height: 0;
   overflow-y: auto;
+  padding: 20px;
 }
 
 .card-buttons {
@@ -59,17 +60,28 @@ main > section:nth-child(2) > div {
 }
 
 .card-buttons > button {
+  margin: 0 20px;
+}
+
+button {
   width: 100px;
   height: 35px;
-  margin: 0 20px;
   border-radius: 2px;
   background-color: #daf7a6;
   border: none;
+}
+
+button:hover:not(:disabled) {
+  background-color: #ecffcb;
   cursor: pointer;
 }
 
-.card-buttons > button:hover {
-  background-color: #ecffcb;
+.card-content span {
+  font-family: KaTeX_Main, 'Times New Roman', serif;
+}
+
+.card-content p {
+  line-height: 3em;
 }
 
 h1 {
