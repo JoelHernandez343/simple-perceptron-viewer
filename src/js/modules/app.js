@@ -1,4 +1,4 @@
-import { getId } from './tools.js';
+import { getId } from './tools';
 
 class App {
   constructor() {
