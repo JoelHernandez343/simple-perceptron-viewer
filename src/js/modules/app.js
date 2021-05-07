@@ -11,6 +11,7 @@ class App {
   constructor() {
     bindingEvents(this);
     this.current = -1;
+    this.previousMovement = true;
 
     this.desmos = Desmos.GraphingCalculator(getId('calculator'), {
       expressionsCollapsed: true,
@@ -47,6 +48,8 @@ class App {
   }
 
   setState(forward) {
+    console.log(this.current);
+
     if (this.current === 0) {
       this.previousBttn.disabled = true;
       textRender.initialRender(this.data);
@@ -56,22 +59,32 @@ class App {
         this.history.previousState();
       }
 
+      this.previousMovement = forward;
+
       return;
     }
 
     this.previousBttn.disabled = false;
 
     if (this.current % 2 === 1) {
-      this.currentState = forward
-        ? this.history.nextState()
-        : this.history.previousState();
+      if (!this.previousMovement || forward || !this.lock) {
+        this.currentState = forward
+          ? this.history.nextState()
+          : this.history.previousState();
+      }
 
       console.log(this.currentState);
       textRender.evalIteration(this.currentState);
+
+      this.lock = false;
     } else {
+      this.lock = true;
+
       console.log(this.currentState);
       textRender.checkIteration(this.currentState);
     }
+
+    this.previousMovement = forward;
   }
 }
 
