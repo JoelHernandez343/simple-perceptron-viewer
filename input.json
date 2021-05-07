@@ -1,6 +1,9 @@
 {
-  "w": [0.5, -6.5],
-  "b": 1,
+  "w": [
+    [1, 0],
+    [0, 1]
+  ],
+  "b": [1, 1],
   "inputs": [
     {
       "input": [1, 1],
@@ -33,6 +36,28 @@
     {
       "input": [-2, -2],
       "target": [1, 1]
+    }
+  ],
+  "styles": [
+    {
+      "target": [0, 0],
+      "style": "POINT",
+      "color": "RED"
+    },
+    {
+      "target": [0, 1],
+      "style": "POINT",
+      "color": "BLUE"
+    },
+    {
+      "target": [1, 0],
+      "style": "CROSS",
+      "color": "RED"
+    },
+    {
+      "target": [1, 1],
+      "style": "CROSS",
+      "color": "BLUE"
     }
   ]
 }

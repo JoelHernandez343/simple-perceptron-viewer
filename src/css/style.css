@@ -8,7 +8,7 @@
 body {
   height: 100vh;
   display: grid;
-  grid-template-columns: 40% 60%;
+  grid-template-columns: 60% 40%;
 }
 
 main {
@@ -74,6 +74,15 @@ button {
 button:hover:not(:disabled) {
   background-color: #ecffcb;
   cursor: pointer;
+}
+
+.card-content {
+  display: flex;
+}
+
+.card-content-left {
+  flex-grow: 1;
+  min-width: 0;
 }
 
 .card-content span {

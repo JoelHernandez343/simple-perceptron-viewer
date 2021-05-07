@@ -1,7 +1,7 @@
-const createVector = (name, vector, direction = 'column') => {
-  let latex = `${name} = \\begin{pmatrix} `;
+const createVector = (vector, name = '', direction = 'column') => {
+  let latex = `${name === '' ? '' : `${name} = `}\\begin{pmatrix} `;
 
-  const separator = direction === 'column' ? '\\\\' : '';
+  const separator = direction === 'column' ? '\\\\' : '\\quad';
 
   vector.forEach(
     (v, i) =>
@@ -11,11 +11,13 @@ const createVector = (name, vector, direction = 'column') => {
   return latex;
 };
 
-const createMatrix = (name, matrix) => {
-  let latex = `${name} = \\begin{pmatrix} `;
+const createMatrix = (matrix, name = '') => {
+  let latex = `${name === '' ? '' : `${name} = `}\\begin{pmatrix} `;
 
   matrix.forEach((row, i) => {
-    row.forEach(v => (latex += `${v}`));
+    row.forEach(
+      (v, i) => (latex += `${v} ${i + 1 < row.length ? '\\quad' : ''}`)
+    );
 
     latex += i + 1 < matrix.length ? '\\\\' : '\\end{pmatrix}';
   });

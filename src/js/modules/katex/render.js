@@ -10,27 +10,66 @@ const render = latex => {
 };
 
 const addPoint = ({ input, target }, index) => {
-  let latex = createVector(`p_{${index}}`, input);
+  let latex = createVector(input, `p_{${index}}`);
 
-  if (Array.isArray(target)) {
-    latex += createVector(`\\quad t_{${index}}`, target);
-  } else {
-    latex += `\\quad t_{${index}} = ${target}`;
-  }
+  latex += createVector(target, `\\quad t_{${index}}`);
 
   return render(latex);
 };
 
 const addVector = (vector, name, direction = 'column') => {
-  const latex = createVector(name, vector, direction);
+  const latex = createVector(vector, name, direction);
 
   return render(latex);
 };
 
 const addMatrix = (matrix, name) => {
-  const latex = createMatrix(name, matrix);
+  const latex = createMatrix(matrix, name);
 
   return render(latex);
 };
 
-export { addPoint, addMatrix, addVector, render };
+const addHardlim = (p, w, b, a) => {
+  const latex = `a = hardlim( ${createMatrix(w)} ${createVector(
+    p
+  )} + ${createVector(b)}) = ${createVector(a)}`;
+
+  return render(latex);
+};
+
+const addError = (e, t, a) => {
+  const latex = `e = ${createVector(t)} - ${createVector(a)} = ${createVector(
+    e
+  )}`;
+
+  return render(latex);
+};
+
+const addNewWeight = (w, e, p, newW) => {
+  const latex = `w = ${createMatrix(w)} + ${createVector(e)} * ${createVector(
+    p,
+    '',
+    'row'
+  )} = ${createMatrix(newW)}`;
+
+  return render(latex);
+};
+
+const addNewBias = (b, e, newBias) => {
+  const latex = `b = ${createVector(b)} + ${createVector(e)} = ${createVector(
+    newBias
+  )}`;
+
+  return render(latex);
+};
+
+export {
+  render,
+  addPoint,
+  addError,
+  addMatrix,
+  addVector,
+  addNewBias,
+  addHardlim,
+  addNewWeight,
+};

@@ -11,4 +11,6 @@ const newP = content => {
   return p;
 };
 
-export { getId, createElement, getClass, newP };
+const mod = (a, n) => ((a % n) + n) % n;
+
+export { getId, createElement, getClass, newP, mod };

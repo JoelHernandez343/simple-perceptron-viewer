@@ -1,19 +1,27 @@
 import { getId } from './tools/index.js';
 
-import { initialRender } from './katex/index.js';
+import * as textRender from './katex/index.js';
+import * as desmos from './desmos/index.js';
+
+import { StateHistory } from './state-history/index.js';
+
 import data from './../../../input.json';
 
 class App {
   constructor() {
     bindingEvents(this);
+    this.current = -1;
 
     this.desmos = Desmos.GraphingCalculator(getId('calculator'), {
-      expressions: false,
+      expressionsCollapsed: true,
     });
 
-    this.desmos.setExpression({ id: 'graph1', latex: 'y=x^2' });
-
     _tmp(this);
+  }
+
+  setData(data) {
+    this.data = data;
+    this.history = new StateHistory(data);
   }
 
   begin() {
@@ -22,20 +30,53 @@ class App {
     }
 
     this.nextBttn.disabled = false;
-    initialRender(this.data);
+
+    this.current = 0;
+
+    this.setState(true);
   }
 
   previousState() {
-    console.log('Previous');
+    this.current--;
+    this.setState(false);
   }
 
   nextState() {
-    console.log('Next');
+    this.current++;
+    this.setState(true);
+  }
+
+  setState(forward) {
+    if (this.current === 0) {
+      this.previousBttn.disabled = true;
+      textRender.initialRender(this.data);
+      desmos.initialRender(this.data, this.desmos);
+
+      if (!forward) {
+        this.history.previousState();
+      }
+
+      return;
+    }
+
+    this.previousBttn.disabled = false;
+
+    if (this.current % 2 === 1) {
+      this.currentState = forward
+        ? this.history.nextState()
+        : this.history.previousState();
+
+      console.log(this.currentState);
+      textRender.evalIteration(this.currentState);
+    } else {
+      console.log(this.currentState);
+      textRender.checkIteration(this.currentState);
+    }
   }
 }
 
-const _tmp = async app => {
-  app.data = data;
+const _tmp = app => {
+  app.setData(data);
   app.begin();
 };
 
