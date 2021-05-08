@@ -8,7 +8,7 @@
 body {
   height: 100vh;
   display: grid;
-  grid-template-columns: 60% 40%;
+  grid-template-columns: 50% 50%;
 }
 
 main {
@@ -95,4 +95,14 @@ button:hover:not(:disabled) {
 
 h1 {
   font-weight: 600;
+}
+
+#status_list li {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+}
+
+#status_list li > p {
+  line-height: 1em;
 }

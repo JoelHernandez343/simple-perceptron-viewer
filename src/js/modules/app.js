@@ -6,6 +6,7 @@ import * as desmos from './desmos/index.js';
 import { StateHistory } from './state-history/index.js';
 
 import data from './../../../input.json';
+import { clearStatusList, renderStatusList } from './status-list/index.js';
 
 class App {
   constructor() {
@@ -48,10 +49,9 @@ class App {
   }
 
   setState(forward) {
-    console.log(this.current);
-
     if (this.current === 0) {
       this.previousBttn.disabled = true;
+
       textRender.initialRender(this.data);
       desmos.initialRender(this.data, this.desmos);
 
@@ -60,6 +60,8 @@ class App {
       }
 
       this.previousMovement = forward;
+
+      clearStatusList();
 
       return;
     }
@@ -73,15 +75,17 @@ class App {
           : this.history.previousState();
       }
 
-      console.log(this.currentState);
       textRender.evalIteration(this.currentState);
+      desmos.evalRender(this.currentState, this.data, this.desmos);
+      renderStatusList(this.currentState, true);
 
       this.lock = false;
     } else {
       this.lock = true;
 
-      console.log(this.currentState);
       textRender.checkIteration(this.currentState);
+      desmos.checkRender(this.currentState, this.data, this.desmos);
+      renderStatusList(this.currentState, false);
     }
 
     this.previousMovement = forward;
