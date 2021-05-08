@@ -1,4 +1,8 @@
 const createVector = (vector, name = '', direction = 'column') => {
+  if (vector.length === 1) {
+    return `${name === '' ? '' : `${name} = `}${vector[0]}`;
+  }
+
   let latex = `${name === '' ? '' : `${name} = `}\\begin{pmatrix} `;
 
   const separator = direction === 'column' ? '\\\\' : '\\quad';
