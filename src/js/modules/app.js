@@ -5,7 +5,6 @@ import * as desmos from './desmos/index.js';
 
 import { StateHistory } from './state-history/index.js';
 
-import data from './../../../input.json';
 import { clearStatusList, renderStatusList } from './status-list/index.js';
 
 class App {
@@ -17,8 +16,6 @@ class App {
     this.desmos = Desmos.GraphingCalculator(getId('calculator'), {
       expressionsCollapsed: true,
     });
-
-    _tmp(this);
   }
 
   setData(data) {
@@ -111,13 +108,12 @@ const bindingEvents = app => {
 
 const readFile = async (e, app) => {
   const file = e.target.files[0];
-  console.log(file);
 
   if (file.type !== 'application/json') {
     throw 'JSON file needed.';
   }
 
-  app.data = JSON.parse(await file.text());
+  app.setData(JSON.parse(await file.text()));
 };
 
 export { App };
