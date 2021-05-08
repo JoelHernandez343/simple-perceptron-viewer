@@ -30,9 +30,9 @@ const addMatrix = (matrix, name) => {
 };
 
 const addHardlim = (p, w, b, a) => {
-  const latex = `a = hardlim( ${createMatrix(w)} ${createVector(
-    p
-  )} + ${createVector(b)}) = ${createVector(a)}`;
+  const latex = `a = hardlim( ${
+    w.length === 1 ? createVector(w[0], '', 'row') : createMatrix(w)
+  } ${createVector(p)} + ${createVector(b)}) = ${createVector(a)}`;
 
   return render(latex);
 };
@@ -49,7 +49,7 @@ const addNewWeight = (w, e, p, newW) => {
   const latex = `w = ${createMatrix(w)} + ${createVector(e)} * ${createVector(
     p,
     '',
-    'row'
+    w.length === 1 ? 'column' : 'row'
   )} = ${createMatrix(newW)}`;
 
   return render(latex);
