@@ -1,11 +1,6 @@
 import { getId } from './tools/index.js';
-
-import * as textRender from './katex/index.js';
-import * as desmos from './desmos/index.js';
-
 import { StateHistory } from './state-history/index.js';
-
-import { clearStatusList, renderStatusList } from './status-list/index.js';
+import { infoRender } from './information/index.js';
 
 class App {
   constructor() {
@@ -32,60 +27,38 @@ class App {
 
     this.current = 0;
 
-    this.setState(true);
+    this.setState();
   }
 
   previousState() {
     this.current--;
-    this.setState(false);
+    this.setState();
   }
 
   nextState() {
     this.current++;
-    this.setState(true);
+    this.setState();
   }
 
-  setState(forward) {
+  setState() {
+    this.previousBttn.disabled = false;
+    const current = ((this.current - 1) / 2) | 0;
+
     if (this.current === 0) {
       this.previousBttn.disabled = true;
-
-      textRender.initialRender(this.data);
-      desmos.initialRender(this.data, this.desmos);
-
-      if (!forward) {
-        this.history.previousState();
-      }
-
-      this.previousMovement = forward;
-
-      clearStatusList();
-
-      return;
-    }
-
-    this.previousBttn.disabled = false;
-
-    if (this.current % 2 === 1) {
-      if (!this.previousMovement || forward || !this.lock) {
-        this.currentState = forward
+    } else if (this.current % 2 === 1) {
+      this.currentState =
+        current > this.history.current
           ? this.history.nextState()
-          : this.history.previousState();
-      }
-
-      textRender.evalIteration(this.currentState);
-      desmos.evalRender(this.currentState, this.data, this.desmos);
-      renderStatusList(this.currentState, true);
-
-      this.lock = false;
+          : this.currentState;
     } else {
-      this.lock = true;
-
-      textRender.checkIteration(this.currentState);
-      desmos.checkRender(this.currentState, this.data, this.desmos);
-      renderStatusList(this.currentState, false);
+      this.currentState =
+        current < this.history.current
+          ? this.history.previousState()
+          : this.currentState;
     }
 
-    this.previousMovement = forward;
+    infoRender(this.data, this.currentState, this.desmos, this.current);
   }
 }
 

@@ -54,8 +54,6 @@ class StateHistory {
   nextState() {
     this.increaseState();
 
-    console.log(this.current, this.currentInput);
-
     if (!this.states[this.current + 1]) {
       const state = this.createState();
       this.states[this.current] = state;
@@ -68,8 +66,6 @@ class StateHistory {
 
   previousState() {
     this.decreaseState();
-
-    console.log(this.current, this.currentInput);
 
     return this.states[this.current];
   }
