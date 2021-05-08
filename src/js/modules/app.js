@@ -89,11 +89,6 @@ class App {
   }
 }
 
-const _tmp = app => {
-  app.setData(data);
-  app.begin();
-};
-
 const bindingEvents = app => {
   getId('json_file').addEventListener('change', e => readFile(e, app));
 
