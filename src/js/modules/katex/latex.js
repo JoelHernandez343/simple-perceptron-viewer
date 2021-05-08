@@ -12,6 +12,10 @@ const createVector = (vector, name = '', direction = 'column') => {
 };
 
 const createMatrix = (matrix, name = '') => {
+  if (matrix.length === 1) {
+    return createVector(matrix[0], name);
+  }
+
   let latex = `${name === '' ? '' : `${name} = `}\\begin{pmatrix} `;
 
   matrix.forEach((row, i) => {
