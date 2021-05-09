@@ -31,7 +31,7 @@ Init webpack development server:
 npm start
 ```
 
-In the web app, select a valid json file. The are two examples in `./test/`, which were used for classes. Then clic in `Begin` and navigate in the algorithm's steps with the button below (`Previous` and `Next`).
+In the web app, select a valid json file. The are two examples in `/test` folder, which were used for classes. Then clic in `Begin` and navigate in the algorithm's steps with buttons below (`Previous` and `Next`).
 
 ## Examples
 
