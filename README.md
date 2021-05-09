@@ -35,7 +35,7 @@ In the web app, select a valid json file. The are two examples in `./test/`, whi
 
 ## JSON structure:
 
-```json
+```javascript
 {
   // Defines the weight matrix. A single row is a vector.
   "w": [[0, 0]],
